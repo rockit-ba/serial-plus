@@ -1,3 +1,4 @@
+//go:build !windows && !linux && cgo
 // +build !windows,!linux,cgo
 
 package serial
@@ -175,6 +176,10 @@ type Port struct {
 	// We intentionly do not use an "embedded" struct so that we
 	// don't export File
 	f *os.File
+}
+
+func (p *Port) GetHandle() *os.File {
+	return p.f
 }
 
 func (p *Port) Read(b []byte) (n int, err error) {
